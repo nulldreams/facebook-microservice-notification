@@ -33,8 +33,10 @@ const schedule    = require('node-schedule');
 
 
 exports.LerMensagem = (mensagem) => {
-	mensagem = JSON.parse(mensagem)
-		console.log('Mensagem enviada por ' + mensagem.sender.id + ', texto: ' + mensagem.message.text + '. Recebida por ' + mensagem.recipient.id)
+  let sender = event.sender.id;
+  let text = event.message.text;
+
+  console.log(sender + ' : ' + text)
 }
 
 exports.VerificaFilaNotificacao = () => {
