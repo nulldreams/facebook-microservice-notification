@@ -81,9 +81,6 @@ exports.VerificaFilaNotificacao = () => {
 var GetNotificacoes = (callback) => {
 	Notificacao.find({}, (err, notificacoes) => {
 		if (err) return console.error(err)
-		console.log('Notificacoes', notificacoes)
-
-
 			if (notificacoes.length > 0) {
 				EnviarNotificacoes(notificacoes, (resposta) => {
 					console.log(resposta)
@@ -102,9 +99,11 @@ var GetUsuarios = () => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
+			console.log('Mensagem', notificacoes[0])
 	for (var i = 0; i < notificacoes.length; i++) {
+			console.log('Mensagem 1', notificacoes[i])
 		User.findOne({ 'local.email': notificacoes[i].usuario }, (err, usuario) => {
-			console.log('Mensagem', notificacoes[i])
+			console.log('Mensagem 2', notificacoes[i])
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
 				sendMessage(usuario.local.subscribers[j].usuario_fb, notificacoes[i].mensagem)
 			}
