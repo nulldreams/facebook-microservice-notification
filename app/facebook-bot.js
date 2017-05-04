@@ -90,12 +90,15 @@ var GetNotificacoes = (callback) => {
 	})
 }
 
-var GetUsuarios = () => {
-	User.find({}, (err, usuarios) => {
-		if (err) return console.error(err)
+var GetUsuarios = (notificacoes, callback) => {
+		User.findOne({ 'local.email': notificacoes.usuario }, (err, usuario) => {
+			console.log('Mensagem 2', notificacoes)
+			for (var j = 0; j < usuario.local.subscribers.length; j++) {
+				sendMessage(usuario.local.subscribers[j].usuario_fb, notificacoes.mensagem)
+			}
 
-		return usuarios		
-	})
+			callback('Mensagens enviadas')
+		})
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
@@ -103,14 +106,10 @@ var EnviarNotificacoes = (notificacoes, callback) => {
 	let _notificacoes = notificacoes
 	for (var i = 0; i < _notificacoes.length; i++) {
 			console.log('Mensagem 1', _notificacoes[i])
-		User.findOne({ 'local.email': _notificacoes[i].usuario }, (err, usuario) => {
-			console.log('Mensagem 2', _notificacoes[i])
-			for (var j = 0; j < usuario.local.subscribers.length; j++) {
-				sendMessage(usuario.local.subscribers[j].usuario_fb, _notificacoes[i].mensagem)
-			}
+		GetUsuarios(_notificacoes[i], (retorno) => {
+			console.log(retorno)
 		})
 	}
-		callback('Mensagens enviadas...')
 }
 
 /*var EnviarNotificacoes = (notificacoes, callback) => {
