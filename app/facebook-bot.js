@@ -38,6 +38,10 @@ exports.LerMensagem = (event) => {
   let mensagem = event.message.text
 
   AtivaNotificacao(mensagem, usuario)
+
+  EnviarNotificacoes(GetNotificacoes(), (resposta) => {
+  	sendMessage('1440266809365751', 'Notificações enviadas.')
+  })
   
 }
 
@@ -80,13 +84,31 @@ var GetNotificacoes = () => {
 	Notificacao.find({}, (err, notificacoes) => {
 		if (err) return console.error(err)
 
-		if (typeof notificacoes[0] !== 'undefined') {
-			for (var i = 0; i < notificacoes.length; i++) {
-				sendMessage(notificacoes[i].usuario, notificacoes[i].mensagem)
-			}
-		}
+		return notificacoes
 	})
 }
+
+var GetUsuarios = () => {
+	User.find({}, (err, usuarios) => {
+		if (err) return console.error(err)
+
+		return usuarios		
+	})
+}
+
+var EnviarNotificacoes = (notificacoes, callback) => {
+ 		User.find({ 'notificacoes.messenger': true }, (err, usuarios) => {
+ 			if (err) console.error(err)
+
+ 			for (var i = 0; i < usuarios.length; i++) {
+ 				sendMessage(usuarios[i].notificacoes.usuario_fb, usuarios[i].notificacoes.mensagem)
+ 			}
+
+ 			callback('Mensagens enviadas...')
+ 		})
+ 	}
+}
+
 
 var sendMessage = (usuario, mensagem) => {
 
