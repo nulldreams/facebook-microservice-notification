@@ -64,7 +64,6 @@ var AtivaNotificacao = (token, usuario_fb) => {
 		}
 	})
 
-	User.find({ '' })
 }
 
 exports.VerificaFilaNotificacao = () => {
