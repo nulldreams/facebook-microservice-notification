@@ -56,8 +56,6 @@ var AtivaNotificacao = (token, usuario_fb) => {
 			usuario.save((err, doc) => {
 				if (err) console.error(err)
 
-				console.log('Salvou', doc)
-
 				console.log(usuario_fb, 'ok')
 				sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
 			})
@@ -72,9 +70,7 @@ exports.VerificaFilaNotificacao = () => {
 	rule.second = [0, 10, 20, 30, 40, 50]
 
 	let j = schedule.scheduleJob(rule, function() {
-		console.log('verificando...')
 		GetNotificacoes()
-		console.log('encontrou...')
 	});
 }
 
@@ -92,8 +88,8 @@ var GetNotificacoes = (callback) => {
 
 var GetUsuarios = (notificacoes, callback) => {
 		User.findOne({ 'local.email': notificacoes.usuario }, (err, usuario) => {
-			console.log('Mensagem 2', notificacoes)
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
+				console.log('Usuário ', usuario.local.subscribers[j])
 				sendMessage(usuario.local.subscribers[j].usuario_fb, notificacoes.mensagem)
 			}
 
@@ -102,10 +98,8 @@ var GetUsuarios = (notificacoes, callback) => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
-			console.log('Mensagem', notificacoes[0])
 	let _notificacoes = notificacoes
 	for (var i = 0; i < _notificacoes.length; i++) {
-			console.log('Mensagem 1', _notificacoes[i])
 		GetUsuarios(_notificacoes[i], (retorno) => {
 			console.log(retorno)
 		})
