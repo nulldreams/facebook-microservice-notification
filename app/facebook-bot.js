@@ -103,6 +103,7 @@ var GetUsuarios = () => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
+			console.log('Mensagem', notificacoes)
 	for (var i = 0; i < notificacoes.length; i++) {
 		User.findOne({ 'local.email': notificacoes[i].usuario }, (err, usuario) => {
 			console.log('Mensagem', notificacoes[i])
