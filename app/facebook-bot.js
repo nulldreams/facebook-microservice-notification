@@ -89,7 +89,7 @@ var GetNotificacoes = (callback) => {
 var GetUsuarios = (notificacoes, callback) => {
 		User.findOne({ 'local.email': notificacoes.usuario }, (err, usuario) => {
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
-				console.log('Usuário ', usuario.local.subscribers[j])
+				console.log('Usuário ', usuario.local.subscribers[j].usuario_fb)
 				console.log(usuario.local.subscribers[j].usuario_fb + ' : ' + notificacoes.mensagem)
 				sendMessage(usuario.local.subscribers[j].usuario_fb, notificacoes.mensagem)
 			}
