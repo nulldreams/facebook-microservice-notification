@@ -2,8 +2,40 @@ const request 	  = require('request')
 const Notificacao = require('./models/notificacao')
 const schedule    = require('node-schedule');
 
+/*
+{  
+   object:'page',
+   entry:[  
+      {  
+         id:'618248161706129',
+         time:1493901316537,
+         messaging:[  
+            Object
+         ]
+      }
+   ]
+},
+{  
+   sender:{  
+      id:'1440266809365751'
+   },
+   recipient:{  
+      id:'618248161706129'
+   },
+   timestamp:1493901316143,
+   message:{  
+      mid:'mid.$cAAJouArA4xZiBLpYL1b03UPdjtKL',
+      seq:486246,
+      text:'ola'
+   }
+}
+*/
+
+
 exports.LerMensagem = (mensagem) => {
-	console.log(mensagem)
+	if (mensagem.object == 'page') {
+		console.log('Mensagem enviada por ' + mensagem.sender.id + ', texto: ' + mensagem.message.text + '. Recebida por ' + mensagem.recipient.id)
+	}
 }
 
 exports.VerificaFilaNotificacao = () => {
