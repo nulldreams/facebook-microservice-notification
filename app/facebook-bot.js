@@ -84,7 +84,7 @@ exports.VerificaFilaNotificacao = () => {
 var GetNotificacoes = () => {
 	Notificacao.find({}, (err, notificacoes) => {
 		if (err) return console.error(err)
-
+		console.log('Notificacoes', notificacoes)
 		return notificacoes
 	})
 }
