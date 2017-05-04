@@ -34,38 +34,33 @@ const ObjectId    = require('mongodb').ObjectId
 */
 
 var teste = {
-    "attachment": {
-        "type": "template",
-        "payload": {
-            "template_type": "list",
-            "top_element_style": "compact",
-            "elements": [{
-                "title": "Classic White T-Shirt",
-                "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
-                "subtitle": "100% Cotton, 200% Comfortable",
-                "default_action": {
-                    "type": "web_url",
-                    "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
-                    "messenger_extensions": true,
-                    "webview_height_ratio": "tall",
-                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                },
-                "buttons": [{
-                    "title": "Buy",
-                    "type": "web_url",
-                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
-                    "messenger_extensions": true,
-                    "webview_height_ratio": "tall",
-                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
-                }]
-            }],
-            "buttons": [{
-                "title": "View More",
-                "type": "postback",
-                "payload": "payload"
-            }]
-        }
-    }
+	"attachment": {
+		"type": "template",
+		"payload": {
+			"template_type": "generic",
+			"elements": [{
+				"title": "Welcome to Peter\'s Hats",
+				"image_url": "https://petersfancybrownhats.com/company_image.png",
+				"subtitle": "We\'ve got the right hat for everyone.",
+				"default_action": {
+					"type": "web_url",
+					"url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+					"messenger_extensions": true,
+					"webview_height_ratio": "tall",
+					"fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+				},
+				"buttons": [{
+					"type": "web_url",
+					"url": "https://petersfancybrownhats.com",
+					"title": "View Website"
+				}, {
+					"type": "postback",
+					"title": "Start Chatting",
+					"payload": "DEVELOPER_DEFINED_PAYLOAD"
+				}]
+			}]
+		}
+	}
 }
 
 exports.LerMensagem = (event) => {
@@ -184,9 +179,7 @@ var sendMessage = (usuario, mensagem) => {
 			recipient: {
 				id: usuario
 			},
-			message: {
-				text: mensagem
-			}
+			message: mensagem
 		}
 	}, function(error, response) {
 		if (error) {
