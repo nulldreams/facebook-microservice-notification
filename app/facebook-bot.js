@@ -93,7 +93,7 @@ var GetUsuarios = (notificacoes, callback) => {
 				let aux = JSON.stringify(usuario.local.subscribers[j])
 
 				sendMessage(JSON.parse(aux).usuario_fb, notificacoes.mensagem)
-				Notificacao.remove({ '_id': ObjectId(JSON.parse(aux)._id)}, (err, result) => {
+				Notificacao.remove({ _id: JSON.parse(aux)._id }, (err, result) => {
 					console.log(result)
 				})
 			}
