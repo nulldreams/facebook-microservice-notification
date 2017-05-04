@@ -72,10 +72,12 @@ exports.VerificaFilaNotificacao = () => {
 	let j = schedule.scheduleJob(rule, function() {
 		console.log('verificando...')
 		GetNotificacoes((notificacoes) => {
-			EnviarNotificacoes(notificacoes, (resposta) => {
-				console.log(resposta)
-				sendMessage('1440266809365751', 'Notificações enviadas.')
-			})
+			if (notificacoes.length > 0) {
+				EnviarNotificacoes(notificacoes, (resposta) => {
+					console.log(resposta)
+					sendMessage('1440266809365751', 'Notificações enviadas.')
+				})
+			}
 		})
 		console.log('encontrou...')
 	});
