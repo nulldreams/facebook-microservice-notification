@@ -73,14 +73,7 @@ exports.VerificaFilaNotificacao = () => {
 
 	let j = schedule.scheduleJob(rule, function() {
 		console.log('verificando...')
-		GetNotificacoes((notificacoes) => {
-			if (notificacoes.length > 0) {
-				EnviarNotificacoes(notificacoes, (resposta) => {
-					console.log(resposta)
-					sendMessage('1440266809365751', 'Notificações enviadas.')
-				})
-			}
-		})
+		GetNotificacoes()
 		console.log('encontrou...')
 	});
 }
@@ -90,7 +83,13 @@ var GetNotificacoes = (callback) => {
 		if (err) return console.error(err)
 		console.log('Notificacoes', notificacoes)
 
-		callback(notificacoes)
+
+			if (notificacoes.length > 0) {
+				EnviarNotificacoes(notificacoes, (resposta) => {
+					console.log(resposta)
+					sendMessage('1440266809365751', 'Notificações enviadas.')
+				})
+			}
 	})
 }
 
@@ -103,7 +102,6 @@ var GetUsuarios = () => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
-			console.log('Mensagem', notificacoes)
 	for (var i = 0; i < notificacoes.length; i++) {
 		User.findOne({ 'local.email': notificacoes[i].usuario }, (err, usuario) => {
 			console.log('Mensagem', notificacoes[i])
