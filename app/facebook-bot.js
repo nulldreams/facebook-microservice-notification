@@ -33,41 +33,39 @@ const ObjectId    = require('mongodb').ObjectId
 }
 */
 
-var teste = {
+var template_mensagem = JSON.parse({
 	"attachment": {
-		"type": "template",
+		type: 'template',
 		"payload": {
-			"template_type": "generic",
+			template_type: 'generic',
 			"elements": [{
-				"title": "Welcome to Peter\'s Hats",
-				"image_url": "https://ci3.googleusercontent.com/proxy/LKXuoWrDySMno1hpUAwpf4BPzPx_k73dFp4ZDTfcbvrs0RXM9BWt_O51WBlQgucYp4B6DME3wpkjGC3de7Do-Zi0CqVW-6nR5pD9HJCHt1bvZdosugrJSAvB0tif0hQ_8TMcfDY0kn8YllYnBv4Zy_-0D0wKMUhHKd2sEqq99T9sHGuPZOYRtAFMX3Q2=s0-d-e1-ft#https://pro-bee-user-content-eu-west-1.s3.amazonaws.com/public/users/BeeFree/bceb12da-0716-43cf-8fdf-78d31e2b18ad/1.jpg",
-				"subtitle": "We\'ve got the right hat for everyone.",
+				title: 'Welcome to Peter\'s Hats',
+				image_url: 'https://ci3.googleusercontent.com/proxy/LKXuoWrDySMno1hpUAwpf4BPzPx_k73dFp4ZDTfcbvrs0RXM9BWt_O51WBlQgucYp4B6DME3wpkjGC3de7Do-Zi0CqVW-6nR5pD9HJCHt1bvZdosugrJSAvB0tif0hQ_8TMcfDY0kn8YllYnBv4Zy_-0D0wKMUhHKd2sEqq99T9sHGuPZOYRtAFMX3Q2=s0-d-e1-ft#https://pro-bee-user-content-eu-west-1.s3.amazonaws.com/public/users/BeeFree/bceb12da-0716-43cf-8fdf-78d31e2b18ad/1.jpg',
+				subtitle: 'We\'ve got the right hat for everyone.',
 				"default_action": {
-					"type": "web_url",
-					"url": "https://sos-animals.herokuapp.com/animal/590b6fcc7e6140bc25f8d568",
+					type: 'web_url',
+					url: 'https://sos-animals.herokuapp.com/animal/590b6fcc7e6140bc25f8d568',
 					"messenger_extensions": true,
-					"webview_height_ratio": "tall",
-					"fallback_url": "https://sos-animals.herokuapp.com/"
+					webview_height_ratio: 'tall',
+					fallback_url: 'https://sos-animals.herokuapp.com/"
 				},
 				"buttons": [{
-					"type": "web_url",
-					"url": "https://sos-animals.herokuapp.com/",
-					"title": "View Website"
-				}, {
-					"type": "postback",
-					"title": "Start Chatting",
-					"payload": "DEVELOPER_DEFINED_PAYLOAD"
+					type: 'web_url',
+					url: 'https://sos-animals.herokuapp.com/',
+					title: 'View Website"
 				}]
 			}]
 		}
 	}
-}
+})
+
+//template_mensagem.payload.elements[0].title = ''
 
 exports.LerMensagem = (event) => {
   let usuario = event.sender.id
   let mensagem = event.message.text
-  sendMessage(usuario, teste)
-  //AtivaNotificacao(mensagem, usuario)
+
+  AtivaNotificacao(mensagem, usuario)
 }
 
 var AtivaNotificacao = (token, usuario_fb) => {
@@ -87,7 +85,12 @@ var AtivaNotificacao = (token, usuario_fb) => {
 				if (err) console.error(err)
 
 				console.log('User salvo', doc)
-				sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
+			/*
+message: {
+				text: mensagem
+			}
+			*/
+				sendMessage(usuario_fb, { message: { text: 'Au Au! Agora você irá receber as notificações por aqui! :)' } })
 			})
 		}
 	})
@@ -121,7 +124,33 @@ var GetUsuarios = (notificacoes, callback) => {
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
 				let aux = JSON.stringify(usuario.local.subscribers[j])
 
-				sendMessage(JSON.parse(aux).usuario_fb, notificacoes.mensagem)
+				var template_mensagem = JSON.parse({
+					attachment: {
+						type: 'template',
+						payload: {
+							template_type: 'generic',
+							elements: [{
+								title: 'Au Au!',
+								image_url: 'https://ci3.googleusercontent.com/proxy/LKXuoWrDySMno1hpUAwpf4BPzPx_k73dFp4ZDTfcbvrs0RXM9BWt_O51WBlQgucYp4B6DME3wpkjGC3de7Do-Zi0CqVW-6nR5pD9HJCHt1bvZdosugrJSAvB0tif0hQ_8TMcfDY0kn8YllYnBv4Zy_-0D0wKMUhHKd2sEqq99T9sHGuPZOYRtAFMX3Q2=s0-d-e1-ft#https://pro-bee-user-content-eu-west-1.s3.amazonaws.com/public/users/BeeFree/bceb12da-0716-43cf-8fdf-78d31e2b18ad/1.jpg',
+								subtitle: 'Olá! Um novo bichinho acaba de ser adicionado!',
+								default_action: {
+									type: 'web_url',
+									url: notificacoes.mensagem,
+									messenger_extensions: true,
+									webview_height_ratio: 'tall',
+									fallback_url: 'https://sos-animals.herokuapp.com/'
+								},
+								buttons: [{
+									type: 'web_url',
+									url: notificacoes.mensagem,
+									title: 'Da uma olhada no perfil dele :)'
+								}]
+							}]
+						}
+					}
+				})
+
+				sendMessage(JSON.parse(aux).usuario_fb, template_mensagem)
 				notificacoes.enviada = true
 
 				notificacoes.save((err, data) => {
