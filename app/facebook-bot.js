@@ -38,11 +38,6 @@ exports.LerMensagem = (event) => {
   let mensagem = event.message.text
 
   AtivaNotificacao(mensagem, usuario)
-
-  EnviarNotificacoes(GetNotificacoes(), (resposta) => {
-  	sendMessage('1440266809365751', 'Notificações enviadas.')
-  })
-  
 }
 
 var AtivaNotificacao = (token, usuario_fb) => {
@@ -52,20 +47,26 @@ var AtivaNotificacao = (token, usuario_fb) => {
 		if (err) console.error(err)
 
 		console.log('Usuario encontrado', usuario)
+		if (usuario !== null) {
+			usuario.notificacoes.messenger = true
+			usuario.notificacoes.usuario_fb = usuario_fb
+			usuario.notificacoes.token = ''
 
-		usuario.notificacoes.messenger = true
-		usuario.notificacoes.usuario_fb = usuario_fb
-		usuario.notificacoes.token = ''
+			usuario.save((err, doc) => {
+				if (err) console.error(err)
 
-		usuario.save((err, doc) => {
-			if (err) console.error(err)
+				console.log('Salvou', doc)
 
-			console.log('Salvou', doc)
-
-			console.log(usuario_fb, 'ok')
-			sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
-		})
+				console.log(usuario_fb, 'ok')
+				sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
+			})
+		}
 	})
+
+	EnviarNotificacoes(GetNotificacoes(), (resposta) => {
+		console.log(resposta)
+		sendMessage('1440266809365751', 'Notificações enviadas.')
+	})	
 }
 
 exports.VerificaFilaNotificacao = () => {
