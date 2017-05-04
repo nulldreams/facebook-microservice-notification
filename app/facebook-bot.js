@@ -71,8 +71,8 @@ var teste = {
 exports.LerMensagem = (event) => {
   let usuario = event.sender.id
   let mensagem = event.message.text
-
-  AtivaNotificacao(teste, usuario)
+  sendMessage(usuario, teste)
+  //AtivaNotificacao(mensagem, usuario)
 }
 
 var AtivaNotificacao = (token, usuario_fb) => {
