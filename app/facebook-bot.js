@@ -1,5 +1,6 @@
 const request 	  = require('request')
 const Notificacao = require('./models/notificacao')
+const User		  = require('./models/user')
 const schedule    = require('node-schedule');
 
 /*
@@ -33,10 +34,28 @@ const schedule    = require('node-schedule');
 
 
 exports.LerMensagem = (event) => {
-  let sender = event.sender.id;
-  let text = event.message.text;
+  let usuario = event.sender.id
+  let mensagem = event.message.text
 
-  console.log(sender + ' : ' + text)
+  AtivaNotificacao(mensagem, usuario)
+  
+}
+
+var AtivaNotificacao = (token, usuario_fb) => {
+	User.findOne({ 'notificacao.token': token }, (err, usuario) => {
+		if (err) console.error(err)
+
+		usuario.notificacao.messenger = true
+		usuario.notificacao.usuario_fb = usuario_fb
+		usuario.notificacao.token = ''
+
+		usuario.save((err, doc) => {
+			if (err) console.error(err)
+
+			console.log(usuario_fb, 'ok')
+			sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
+		})
+	})
 }
 
 exports.VerificaFilaNotificacao = () => {
