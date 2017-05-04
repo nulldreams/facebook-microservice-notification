@@ -25,4 +25,10 @@ module.exports = (app) => {
         })
     })
 
+  bot.VerificaFilaNotificacao()
+
+
+
+
+
 }
