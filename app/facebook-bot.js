@@ -90,9 +90,9 @@ var GetUsuarios = (notificacoes, callback) => {
 		User.findOne({ 'local.email': notificacoes.usuario }, (err, usuario) => {
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
 				let aux = JSON.stringify(usuario.local.subscribers[j])
-				console.log('Usuário ', JSON.parse(aux).usuario_fb)
-				console.log(JSON.parse(aux).usuario_fb + ' : ' + notificacoes.mensagem)
+
 				sendMessage(JSON.parse(aux).usuario_fb, notificacoes.mensagem)
+				Notificacao.remove({ '_id': ObjectId(JSON.parse(aux)._id)})
 			}
 
 			callback('Mensagens enviadas')
@@ -104,6 +104,7 @@ var EnviarNotificacoes = (notificacoes, callback) => {
 	for (var i = 0; i < _notificacoes.length; i++) {
 		GetUsuarios(_notificacoes[i], (retorno) => {
 			console.log(retorno)
+
 		})
 	}
 }
