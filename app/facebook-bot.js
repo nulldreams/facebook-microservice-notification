@@ -57,7 +57,7 @@ var AtivaNotificacao = (token, usuario_fb) => {
 			usuario.save((err, doc) => {
 				if (err) console.error(err)
 
-				console.log(usuario_fb, 'ok')
+				console.log('User salvo', doc)
 				sendMessage(usuario_fb, 'Au Au! Agora você irá receber as notificações por aqui! :)')
 			})
 		}
