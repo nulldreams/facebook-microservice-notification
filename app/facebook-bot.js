@@ -49,9 +49,9 @@ var AtivaNotificacao = (token, usuario_fb) => {
 
 		console.log('Usuario encontrado', usuario)
 
-		usuario.notificacao.messenger = true
-		usuario.notificacao.usuario_fb = usuario_fb
-		usuario.notificacao.token = ''
+		usuario.notificacoes.messenger = true
+		usuario.notificacoes.usuario_fb = usuario_fb
+		usuario.notificacoes.token = ''
 
 		usuario.save((err, doc) => {
 			if (err) console.error(err)
