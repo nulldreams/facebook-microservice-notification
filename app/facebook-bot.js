@@ -33,7 +33,7 @@ const ObjectId    = require('mongodb').ObjectId
 }
 */
 
-var template_mensagem = JSON.parse({
+/*var template_mensagem = JSON.parse({
 	"attachment": {
 		type: 'template',
 		"payload": {
@@ -57,7 +57,7 @@ var template_mensagem = JSON.parse({
 			}]
 		}
 	}
-})
+})*/
 
 //template_mensagem.payload.elements[0].title = ''
 
