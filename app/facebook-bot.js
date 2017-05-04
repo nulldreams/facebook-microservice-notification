@@ -32,7 +32,7 @@ const schedule    = require('node-schedule');
 */
 
 
-exports.LerMensagem = (mensagem) => {
+exports.LerMensagem = (event) => {
   let sender = event.sender.id;
   let text = event.message.text;
 
