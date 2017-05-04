@@ -100,12 +100,13 @@ var GetUsuarios = () => {
 
 var EnviarNotificacoes = (notificacoes, callback) => {
 			console.log('Mensagem', notificacoes[0])
-	for (var i = 0; i < notificacoes.length; i++) {
-			console.log('Mensagem 1', notificacoes[i])
-		User.findOne({ 'local.email': notificacoes[i].usuario }, (err, usuario) => {
-			console.log('Mensagem 2', notificacoes[i])
+	let _notificacoes = notificacoes
+	for (var i = 0; i < _notificacoes.length; i++) {
+			console.log('Mensagem 1', _notificacoes[i])
+		User.findOne({ 'local.email': _notificacoes[i].usuario }, (err, usuario) => {
+			console.log('Mensagem 2', _notificacoes[i])
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
-				sendMessage(usuario.local.subscribers[j].usuario_fb, notificacoes[i].mensagem)
+				sendMessage(usuario.local.subscribers[j].usuario_fb, _notificacoes[i].mensagem)
 			}
 		})
 	}
