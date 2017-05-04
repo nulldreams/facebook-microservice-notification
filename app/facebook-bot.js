@@ -2,6 +2,7 @@ const request 	  = require('request')
 const Notificacao = require('./models/notificacao')
 const User		  = require('./models/user')
 const schedule    = require('node-schedule');
+const ObjectId    = require('mongodb').ObjectId
 
 /*
 {  
@@ -92,7 +93,9 @@ var GetUsuarios = (notificacoes, callback) => {
 				let aux = JSON.stringify(usuario.local.subscribers[j])
 
 				sendMessage(JSON.parse(aux).usuario_fb, notificacoes.mensagem)
-				Notificacao.remove({ '_id': ObjectId(JSON.parse(aux)._id)})
+				Notificacao.remove({ '_id': ObjectId(JSON.parse(aux)._id)}, (err, result) => {
+					console.log(result)
+				})
 			}
 
 			callback('Mensagens enviadas')
