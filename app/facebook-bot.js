@@ -44,7 +44,7 @@ exports.LerMensagem = (event) => {
 var AtivaNotificacao = (token, usuario_fb) => {
 	console.log('Token', token)
 	console.log('Usuario', usuario_fb)
-	User.findOne({ 'notificacao.token': token }, (err, usuario) => {
+	User.findOne({ 'notificacoes.token': token }, (err, usuario) => {
 		if (err) console.error(err)
 
 		console.log('Usuario encontrado', usuario)
