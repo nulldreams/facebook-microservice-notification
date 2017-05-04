@@ -97,16 +97,24 @@ var GetUsuarios = () => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
- 		User.find({ 'notificacoes.messenger': true }, (err, usuarios) => {
- 			if (err) console.error(err)
+	User.find({ 'notificacoes.messenger': true }, (err, usuarios) => {
+		if (err) console.error(err)
 
- 			for (var i = 0; i < usuarios.length; i++) {
- 				sendMessage(usuarios[i].notificacoes.usuario_fb, usuarios[i].notificacoes.mensagem)
- 			}
+		for (var i = 0; i < notificacoes.length; i++) {
+			for (var j = 0; j < usuarios.length; j++) {
+				sendMessage(usuarios[i].notificacoes.usuario_fb, notificacoes[i].mensagem)
 
- 			callback('Mensagens enviadas...')
- 		})
- 	}
+				Notificacao.findById(notificacoes[i].id, (err, notificacao) => {
+					if (err) return console.error(err)
+
+					return notificacao
+				})
+
+			}
+		}
+
+		callback('Mensagens enviadas...')
+	})
 }
 
 
