@@ -124,7 +124,7 @@ var GetUsuarios = (notificacoes, callback) => {
 			for (var j = 0; j < usuario.local.subscribers.length; j++) {
 				let aux = JSON.stringify(usuario.local.subscribers[j])
 
-				var template_mensagem = JSON.parse({
+				var template_mensagem = {
 					"attachment": {
 						"type": "template",
 						"payload": {
@@ -148,7 +148,7 @@ var GetUsuarios = (notificacoes, callback) => {
 							}]
 						}
 					}
-				})
+				}
 
 				sendMessage(JSON.parse(aux).usuario_fb, template_mensagem)
 				notificacoes.enviada = true
