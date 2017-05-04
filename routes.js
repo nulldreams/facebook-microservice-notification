@@ -25,7 +25,7 @@ module.exports = (app) => {
         })
     })
 
-  bot.VerificaFilaNotificacao()
+//  bot.VerificaFilaNotificacao()
 
 
 
