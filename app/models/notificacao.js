@@ -5,7 +5,8 @@ var bcrypt = require('bcrypt-nodejs');
 // define the schema for our user model
 var notificacaoSchema = mongoose.Schema({
     usuario: String,
-    mensagem: String
+    mensagem: String,
+    enviada: { type: Boolean, default: false }
 });
 
 // generating a hash

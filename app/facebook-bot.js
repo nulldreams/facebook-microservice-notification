@@ -76,7 +76,7 @@ exports.VerificaFilaNotificacao = () => {
 }
 
 var GetNotificacoes = (callback) => {
-	Notificacao.find({}, (err, notificacoes) => {
+	Notificacao.find({ 'enviada': false }, (err, notificacoes) => {
 		if (err) return console.error(err)
 			if (notificacoes.length > 0) {
 				EnviarNotificacoes(notificacoes, (resposta) => {
