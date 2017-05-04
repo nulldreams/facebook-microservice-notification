@@ -50,6 +50,7 @@ var AtivaNotificacao = (token, usuario_fb) => {
 		if (usuario !== null) {
 			usuario.notificacoes.messenger = true
 			usuario.notificacoes.usuario_fb = usuario_fb
+			usuario.local.usuario_fb = usuario_fb
 			usuario.notificacoes.token = ''
 
 			usuario.save((err, doc) => {
@@ -62,6 +63,8 @@ var AtivaNotificacao = (token, usuario_fb) => {
 			})
 		}
 	})
+
+	User.find({ '' })
 }
 
 exports.VerificaFilaNotificacao = () => {
@@ -101,6 +104,17 @@ var GetUsuarios = () => {
 }
 
 var EnviarNotificacoes = (notificacoes, callback) => {
+	for (var i = 0; i < notificacoes.length; i++) {
+		User.findOne({ 'local.email': notificacoes[i].usuario }, (err, usuario) => {
+			for (var j = 0; j < usuario.subscribers.length; j++) {
+				sendMessage(usuario.subscribers[j].usuario_fb, notificacoes[i].mensagem)
+			}
+		})
+	}
+		callback('Mensagens enviadas...')
+}
+
+/*var EnviarNotificacoes = (notificacoes, callback) => {
 	User.find({ 'notificacoes.messenger': true }, (err, usuarios) => {
 		if (err) console.error(err)
 
@@ -119,7 +133,7 @@ var EnviarNotificacoes = (notificacoes, callback) => {
 
 		callback('Mensagens enviadas...')
 	})
-}
+}*/
 
 
 var sendMessage = (usuario, mensagem) => {
