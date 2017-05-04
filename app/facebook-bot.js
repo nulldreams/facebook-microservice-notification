@@ -63,10 +63,13 @@ var AtivaNotificacao = (token, usuario_fb) => {
 		}
 	})
 
-	EnviarNotificacoes(GetNotificacoes(), (resposta) => {
-		console.log(resposta)
-		sendMessage('1440266809365751', 'Notificações enviadas.')
-	})	
+	GetNotificacoes((notificacoes) => {
+		EnviarNotificacoes(notificacoes, (resposta) => {
+			console.log(resposta)
+			sendMessage('1440266809365751', 'Notificações enviadas.')
+		})
+	})
+
 }
 
 exports.VerificaFilaNotificacao = () => {
@@ -81,11 +84,12 @@ exports.VerificaFilaNotificacao = () => {
 	});
 }
 
-var GetNotificacoes = () => {
+var GetNotificacoes = (callback) => {
 	Notificacao.find({}, (err, notificacoes) => {
 		if (err) return console.error(err)
 		console.log('Notificacoes', notificacoes)
-		return notificacoes
+
+		callback(notificacoes)
 	})
 }
 
