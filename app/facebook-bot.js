@@ -40,18 +40,18 @@ var teste = {
 			"template_type": "generic",
 			"elements": [{
 				"title": "Welcome to Peter\'s Hats",
-				"image_url": "https://petersfancybrownhats.com/company_image.png",
+				"image_url": "https://ci3.googleusercontent.com/proxy/LKXuoWrDySMno1hpUAwpf4BPzPx_k73dFp4ZDTfcbvrs0RXM9BWt_O51WBlQgucYp4B6DME3wpkjGC3de7Do-Zi0CqVW-6nR5pD9HJCHt1bvZdosugrJSAvB0tif0hQ_8TMcfDY0kn8YllYnBv4Zy_-0D0wKMUhHKd2sEqq99T9sHGuPZOYRtAFMX3Q2=s0-d-e1-ft#https://pro-bee-user-content-eu-west-1.s3.amazonaws.com/public/users/BeeFree/bceb12da-0716-43cf-8fdf-78d31e2b18ad/1.jpg",
 				"subtitle": "We\'ve got the right hat for everyone.",
 				"default_action": {
 					"type": "web_url",
-					"url": "https://peterssendreceiveapp.ngrok.io/view?item=103",
+					"url": "https://sos-animals.herokuapp.com/animal/590b6fcc7e6140bc25f8d568",
 					"messenger_extensions": true,
 					"webview_height_ratio": "tall",
-					"fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+					"fallback_url": "https://sos-animals.herokuapp.com/"
 				},
 				"buttons": [{
 					"type": "web_url",
-					"url": "https://petersfancybrownhats.com",
+					"url": "https://sos-animals.herokuapp.com/",
 					"title": "View Website"
 				}, {
 					"type": "postback",
