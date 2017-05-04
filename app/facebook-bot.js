@@ -150,6 +150,8 @@ var GetUsuarios = (notificacoes, callback) => {
 					}
 				}
 
+				console.log('Template da Mensagem:', template_mensagem)
+
 				sendMessage(JSON.parse(aux).usuario_fb, template_mensagem)
 				notificacoes.enviada = true
 
